@@ -1,0 +1,99 @@
+@using fintrack.DTOs
+@model UserLogin
+
+@{
+    ViewData["Title"] = "FinTrack";
+}
+
+<div class="bg-white text-slate-900 antialiased">
+
+  <div class="min-h-screen grid lg:grid-cols-5">
+
+    <!-- Illustration panel -->
+    <div class="hidden lg:flex lg:col-span-2 relative bg-slate-900 flex-col justify-between p-12 overflow-hidden">
+      <div class="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-emerald-500/20 blur-3xl"></div>
+      <div class="absolute bottom-0 right-0 w-72 h-72 rounded-full bg-indigo-500/20 blur-3xl"></div>
+
+      <a href="/" class="relative flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-emerald-500 flex items-center justify-center">
+          <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2.5" stroke="white" stroke-width="1.8"/><path d="M2 10H22" stroke="white" stroke-width="1.8"/><circle cx="17" cy="14" r="1.4" fill="white"/></svg>
+        </span>
+        <span class="font-display text-lg font-bold text-white">FinTrack</span>
+      </a>
+
+      <div class="relative">
+        <div class="relative w-full max-w-sm rotate-[-3deg]">
+          <div class="relative aspect-[1.6/1] rounded-3xl bg-gradient-to-br from-emerald-400 via-blue-600 to-indigo-700 p-6 shadow-2xl shadow-indigo-900/40 overflow-hidden">
+            <div class="absolute -right-10 -top-10 w-40 h-40 rounded-full bg-white/10"></div>
+            <div class="relative flex items-center justify-between">
+              <span class="font-display text-white font-semibold tracking-wide text-sm">FinTrack</span>
+              <svg class="w-8 h-6 text-white/90" viewBox="0 0 32 24" fill="none"><rect x="0.5" y="0.5" width="31" height="23" rx="4" stroke="currentColor"/><line x1="0.5" y1="9" x2="31.5" y2="9" stroke="currentColor"/></svg>
+            </div>
+            <div class="relative mt-7">
+              <p class="text-white/70 text-xs font-medium tracking-widest uppercase">Available balance</p>
+              <p class="font-display text-white text-2xl font-semibold mt-1">$24,318.92</p>
+            </div>
+            <div class="relative mt-6 flex items-center justify-between">
+              <p class="font-mono text-white/80 text-xs tracking-widest">•••• •••• •••• 4821</p>
+              <p class="text-white/70 text-xs">SARAH CHEN</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="font-display text-2xl font-bold text-white mt-10 max-w-xs">Your wallet, exactly where you left it.</h2>
+        <p class="text-slate-400 mt-3 max-w-xs text-sm leading-relaxed">Log in to check your balance, send money, and review every transaction in one place.</p>
+      </div>
+
+      <p class="relative text-slate-500 text-xs"> 2026 FinTrack Wallet Management</p>
+    </div>
+
+    <!-- Form panel -->
+    <div class="lg:col-span-3 flex items-center justify-center px-6 py-12 sm:py-20">
+      <div class="w-full max-w-sm">
+        <a href="/" class="lg:hidden flex items-center gap-2 mb-10 justify-center">
+          <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2.5" stroke="white" stroke-width="1.8"/><path d="M2 10H22" stroke="white" stroke-width="1.8"/><circle cx="17" cy="14" r="1.4" fill="white"/></svg>
+          </span>
+          <span class="font-display text-lg font-bold text-slate-900">FinTrack</span>
+        </a>
+
+        <h1 class="font-display text-3xl font-bold text-slate-900">Welcome back</h1>
+        <p class="text-slate-600 mt-2">Log in to manage your wallet and transfers.</p>
+
+        <form asp-controller="Session" asp-action="Login" method="post" class="mt-8 space-y-5">
+          <div>
+            <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
+            <input asp-for="Email" type="email" id="email" name="email" placeholder="you@example.com"
+              class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" />
+          </div>
+      <span asp-validation-for="Email"
+      class="text-red-500 text-sm"></span>
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label asp-for="Password" for="password" class="block text-sm font-medium text-slate-700">Password</label>
+            </div>
+            <span asp-validation-for="Password"
+      class="text-red-500 text-sm"></span>
+            <input type="password" id="password" name="password" placeholder="••••••••"
+              class="w-full px-4 py-3 rounded-xl border border-slate-300 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" />
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <input type="checkbox" id="remember" name="remember" class="w-4 h-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500" />
+            <label for="remember" class="text-sm text-slate-600">Remember me on this device</label>
+          </div>
+
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm py-3.5 rounded-xl shadow-lg shadow-emerald-600/25 transition-colors">
+            Log in
+          </button>
+        </form>
+
+        <p class="text-center text-sm text-slate-600 mt-8">
+          Don't have an account?
+          <a href="/register" class="font-semibold text-emerald-600 hover:text-emerald-700">Register</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>

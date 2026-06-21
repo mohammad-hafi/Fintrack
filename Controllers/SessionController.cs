@@ -5,8 +5,8 @@ using fintrack.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 namespace fintrack.Controllers;
-[ApiController]
-public class SessionController:ControllerBase
+[Controller]
+public class SessionController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly PasswordHash _hash;
@@ -18,8 +18,13 @@ public class SessionController:ControllerBase
     }
 
     [HttpPost("register")]
-    public async Task<IActionResult> Register(UserRegister dto)
+    public async Task<IActionResult> Register([FromForm]UserRegister dto)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         var reg = await _context.Users.AnyAsync(x=>x.Email == dto.Email);
         if(reg)
             return BadRequest("Email already exist");
@@ -34,12 +39,17 @@ public class SessionController:ControllerBase
         _context.Users.Add(user);
         await _context.SaveChangesAsync();
 
-        return Ok("User Registered");
+        HttpContext.Session.SetInt32("UserId", user.Id);
+
+        return RedirectToAction("Dashboard", "Home");
     }
+
+
+
     [HttpPost("login")]
-public async Task<IActionResult> Login(UserLogin dto)
-{
-    var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == dto.Email);
+    public async Task<IActionResult> Login([FromForm] UserLogin dto)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == dto.Email);
 
     if (user == null)
         return BadRequest("Invalid credentials");
@@ -49,11 +59,7 @@ public async Task<IActionResult> Login(UserLogin dto)
     if (!valid)
         return BadRequest("Invalid credentials");
 
-    return Ok(new
-    {
-        message = "Login successful",
-        userId = user.Id,
-        name = user.Name
-    });
+    HttpContext.Session.SetInt32("UserId", user.Id);
+    return RedirectToAction("Dashboard", "Home");
 }
 }

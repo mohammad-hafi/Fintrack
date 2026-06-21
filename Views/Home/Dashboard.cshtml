@@ -1,0 +1,184 @@
+@using fintrack.ViewModels
+@model DashboardViewModel
+<div class="bg-slate-50 text-slate-900 antialiased">
+
+  <!-- App Navbar -->
+  <header class="sticky top-0 z-50 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-8">
+        <a href="Home/Dashboard" class="flex items-center gap-2">
+          <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2.5" stroke="white" stroke-width="1.8"/><path d="M2 10H22" stroke="white" stroke-width="1.8"/><circle cx="17" cy="14" r="1.4" fill="white"/></svg>
+          </span>
+          <span class="font-display text-lg font-bold text-slate-900 hidden sm:inline">FinTrack</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
+          <a href="Home/Dashboard" class="px-3.5 py-2 rounded-lg bg-emerald-50 text-emerald-700 font-semibold">Dashboard</a>
+          <a asp-controller="Home" asp-action="Transaction" class="px-3.5 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">Transactions</a>
+          <a href="transfer.html" class="px-3.5 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">Transfer</a>
+          <a href="profile.html" class="px-3.5 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">Profile</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="hidden sm:flex p-2 rounded-lg text-slate-500 hover:bg-slate-50 hover:text-slate-700 relative">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+          <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-500"></span>
+        </button>
+        <div class="flex items-center gap-2.5 pl-3 border-l border-slate-200">
+          <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-semibold text-sm flex items-center justify-center">SC</span>
+          <span class="text-sm font-medium text-slate-700 hidden sm:inline">@Model.Name</span>
+        </div>
+        <a href="login.html" class="text-sm font-medium text-slate-500 hover:text-red-600 transition-colors">Logout</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-6 lg:px-8 py-8 space-y-8">
+
+    <div>
+      <h1 class="font-display text-2xl font-bold text-slate-900">Welcome back, @Model.Name</h1>
+      <p class="text-slate-500 text-sm mt-1">Wednesday, June 17, 2026 — here's what's happening with your wallet.</p>
+    </div>
+
+    <!-- Wallet overview -->
+    <div class="grid lg:grid-cols-3 gap-6">
+      <!-- Balance card (signature wallet card) -->
+      <div class="relative rounded-3xl bg-gradient-to-br from-emerald-400 via-blue-600 to-indigo-700 p-7 shadow-xl shadow-indigo-900/15 overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-44 h-44 rounded-full bg-white/10"></div>
+        <div class="absolute -right-2 bottom-6 w-24 h-24 rounded-full bg-white/10"></div>
+        <div class="relative flex items-center justify-between">
+          <span class="font-display text-white font-semibold tracking-wide">FinTrack</span>
+          <svg class="w-9 h-6 text-white/90" viewBox="0 0 32 24" fill="none"><rect x="0.5" y="0.5" width="31" height="23" rx="4" stroke="currentColor"/><line x1="0.5" y1="9" x2="31.5" y2="9" stroke="currentColor"/></svg>
+        </div>
+        <p class="relative text-white/70 text-xs font-medium tracking-widest uppercase mt-8">Current balance</p>
+        <p class="relative font-display text-white text-4xl font-semibold mt-1">$@Model.Balance</p>
+        <div class="relative mt-7 flex items-center justify-between">
+          <p class="font-mono text-white/80 text-sm tracking-widest">•••• •••• •••• 4821</p>
+          <p class="text-white/70 text-xs tracking-wide">@Model.Name</p>
+        </div>
+      </div>
+
+      <!-- Stat widgets -->
+      <div class="lg:col-span-2 grid sm:grid-cols-3 gap-5">
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
+          <span class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
+            <svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+          </span>
+          <div class="mt-5">
+            <p class="text-sm text-slate-500">Total deposits</p>
+            <p class="font-display font-mono text-2xl font-semibold text-slate-900 mt-1">$18,200.00</p>
+            <p class="text-xs text-emerald-600 font-medium mt-1">+12.4% this month</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
+          <span class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+          </span>
+          <div class="mt-5">
+            <p class="text-sm text-slate-500">Total transfers</p>
+            <p class="font-display font-mono text-2xl font-semibold text-slate-900 mt-1">$9,540.50</p>
+            <p class="text-xs text-slate-500 font-medium mt-1">Across 24 transfers</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
+          <span class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
+            <svg class="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 4 8-8"/><path d="M21 21H3V3"/></svg>
+          </span>
+          <div class="mt-5">
+            <p class="text-sm text-slate-500">Recent activity</p>
+            <p class="font-display font-mono text-2xl font-semibold text-slate-900 mt-1">37</p>
+            <p class="text-xs text-slate-500 font-medium mt-1">Events in last 30 days</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick actions -->
+    <div>
+      <h2 class="font-display text-lg font-semibold text-slate-900 mb-4">Quick actions</h2>
+      <div class="grid sm:grid-cols-3 gap-5">
+        <a href="deposit.html" class="group bg-white rounded-2xl border border-slate-200 hover:border-emerald-300 hover:shadow-lg hover:shadow-slate-900/5 p-6 flex items-center gap-4 transition-all">
+          <span class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-100 transition-colors">
+            <svg class="w-5.5 h-5.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+          </span>
+          <div>
+            <p class="font-semibold text-slate-900">Deposit money</p>
+            <p class="text-sm text-slate-500 mt-0.5">Add funds to your wallet</p>
+          </div>
+        </a>
+        <a href="transfer.html" class="group bg-white rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-lg hover:shadow-slate-900/5 p-6 flex items-center gap-4 transition-all">
+          <span class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100 transition-colors">
+            <svg class="w-5.5 h-5.5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+          </span>
+          <div>
+            <p class="font-semibold text-slate-900">Transfer money</p>
+            <p class="text-sm text-slate-500 mt-0.5">Send to another wallet</p>
+          </div>
+        </a>
+        <a asp-controller="Home" asp-action="Transaction" class="group bg-white rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-lg hover:shadow-slate-900/5 p-6 flex items-center gap-4 transition-all">
+          <span class="w-12 h-12 rounded-xl bg-indigo-50 flex items-center justify-center shrink-0 group-hover:bg-indigo-100 transition-colors">
+            <svg class="w-5.5 h-5.5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h2M8 17h6"/></svg>
+          </span>
+          <div>
+            <p class="font-semibold text-slate-900">View transactions</p>
+            <p class="text-sm text-slate-500 mt-0.5">See your full history</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Recent transactions -->
+    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-5 border-b border-slate-100">
+        <h2 class="font-display text-lg font-semibold text-slate-900">Recent transactions</h2>
+        <a asp-controller="Home" asp-action="Transaction" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">View all</a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="text-left text-slate-500 border-b border-slate-100">
+              <th class="px-6 py-3 font-medium">Date</th>
+              <th class="px-6 py-3 font-medium">Recipient</th>
+              <th class="px-6 py-3 font-medium">Amount</th>
+              <th class="px-6 py-3 font-medium">Status</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4 text-slate-600">Jun 16, 2026</td>
+              <td class="px-6 py-4 font-medium text-slate-900">Marcus Lee</td>
+              <td class="px-6 py-4 font-mono text-slate-900">-$420.00</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4 text-slate-600">Jun 15, 2026</td>
+              <td class="px-6 py-4 font-medium text-slate-900">Wallet top-up</td>
+              <td class="px-6 py-4 font-mono text-emerald-700">+$2,000.00</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4 text-slate-600">Jun 14, 2026</td>
+              <td class="px-6 py-4 font-medium text-slate-900">Priya Nair</td>
+              <td class="px-6 py-4 font-mono text-slate-900">-$95.50</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">Pending</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4 text-slate-600">Jun 12, 2026</td>
+              <td class="px-6 py-4 font-medium text-slate-900">Daniel Osei</td>
+              <td class="px-6 py-4 font-mono text-slate-900">-$1,250.00</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-red-700 bg-red-50 px-2.5 py-1 rounded-full">Failed</span></td>
+            </tr>
+            <tr class="hover:bg-slate-50/60 transition-colors">
+              <td class="px-6 py-4 text-slate-600">Jun 10, 2026</td>
+              <td class="px-6 py-4 font-medium text-slate-900">Wallet top-up</td>
+              <td class="px-6 py-4 font-mono text-emerald-700">+$500.00</td>
+              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+</div>
