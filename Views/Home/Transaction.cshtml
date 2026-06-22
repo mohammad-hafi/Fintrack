@@ -1,31 +1,9 @@
+@using fintrack.ViewModels
+@model DashboardViewModel
 <div class="bg-slate-50 text-slate-900 antialiased">
 
   <!-- App Navbar -->
-  <header class="sticky top-0 z-50 bg-white border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-8">
-        <a href="dashboard.html" class="flex items-center gap-2">
-          <span class="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none"><rect x="2" y="6" width="20" height="13" rx="2.5" stroke="white" stroke-width="1.8"/><path d="M2 10H22" stroke="white" stroke-width="1.8"/><circle cx="17" cy="14" r="1.4" fill="white"/></svg>
-          </span>
-          <span class="font-display text-lg font-bold text-slate-900 hidden sm:inline">FinTrack</span>
-        </a>
-        <nav class="hidden md:flex items-center gap-1 text-sm font-medium">
-          <a href="dashboard.html" class="px-3.5 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">Dashboard</a>
-          <a href="transactions.html" class="px-3.5 py-2 rounded-lg bg-emerald-50 text-emerald-700 font-semibold">Transactions</a>
-          <a href="transfer.html" class="px-3.5 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">Transfer</a>
-          <a href="profile.html" class="px-3.5 py-2 rounded-lg text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">Profile</a>
-        </nav>
-      </div>
-      <div class="flex items-center gap-4">
-        <div class="flex items-center gap-2.5 pl-3 border-l border-slate-200">
-          <span class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-700 font-semibold text-sm flex items-center justify-center">SC</span>
-          <span class="text-sm font-medium text-slate-700 hidden sm:inline">Sarah Chen</span>
-        </div>
-        <a href="login.html" class="text-sm font-medium text-slate-500 hover:text-red-600 transition-colors">Logout</a>
-      </div>
-    </div>
-  </header>
+
 
   <main class="max-w-7xl mx-auto px-6 lg:px-8 py-8 space-y-6">
 
@@ -34,122 +12,30 @@
       <p class="text-slate-500 text-sm mt-1">A complete record of every deposit and transfer on your wallet.</p>
     </div>
 
-    <!-- Search + filters -->
-    <div class="bg-white rounded-2xl border border-slate-200 p-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-      <div class="relative flex-1 max-w-md">
-        <svg class="w-5 h-5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="text" placeholder="Search by transaction ID, name, or email"
-          class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-shadow" />
-      </div>
-      <div class="flex items-center gap-3">
-        <div class="relative">
-          <select class="appearance-none pl-4 pr-9 py-2.5 rounded-xl border border-slate-300 text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
-            <option>All statuses</option>
-            <option>Completed</option>
-            <option>Pending</option>
-            <option>Failed</option>
-          </select>
-          <svg class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
-        <div class="relative">
-          <select class="appearance-none pl-4 pr-9 py-2.5 rounded-xl border border-slate-300 text-sm font-medium text-slate-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 cursor-pointer">
-            <option>Last 30 days</option>
-            <option>Last 90 days</option>
-            <option>This year</option>
-            <option>All time</option>
-          </select>
-          <svg class="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
-        </div>
-      </div>
-    </div>
-
     <!-- Table -->
     <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
             <tr class="text-left text-slate-500 border-b border-slate-100 bg-slate-50/60">
-              <th class="px-6 py-3 font-medium">Transaction ID</th>
               <th class="px-6 py-3 font-medium">Date</th>
               <th class="px-6 py-3 font-medium">Sender</th>
               <th class="px-6 py-3 font-medium">Receiver</th>
               <th class="px-6 py-3 font-medium">Amount</th>
-              <th class="px-6 py-3 font-medium">Status</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
-            <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="px-6 py-4 font-mono text-slate-500">TXN-84213</td>
-              <td class="px-6 py-4 text-slate-600">Jun 16, 2026</td>
-              <td class="px-6 py-4 font-medium text-slate-900">Sarah Chen</td>
-              <td class="px-6 py-4 text-slate-600">Marcus Lee</td>
-              <td class="px-6 py-4 font-mono text-slate-900">-$420.00</td>
-              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
-            </tr>
-            <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="px-6 py-4 font-mono text-slate-500">TXN-84198</td>
-              <td class="px-6 py-4 text-slate-600">Jun 15, 2026</td>
-              <td class="px-6 py-4 text-slate-600">External deposit</td>
-              <td class="px-6 py-4 font-medium text-slate-900">Sarah Chen</td>
-              <td class="px-6 py-4 font-mono text-emerald-700">+$2,000.00</td>
-              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
-            </tr>
-            <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="px-6 py-4 font-mono text-slate-500">TXN-84176</td>
-              <td class="px-6 py-4 text-slate-600">Jun 14, 2026</td>
-              <td class="px-6 py-4 font-medium text-slate-900">Sarah Chen</td>
-              <td class="px-6 py-4 text-slate-600">Priya Nair</td>
-              <td class="px-6 py-4 font-mono text-slate-900">-$95.50</td>
-              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-1 rounded-full">Pending</span></td>
-            </tr>
-            <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="px-6 py-4 font-mono text-slate-500">TXN-84150</td>
-              <td class="px-6 py-4 text-slate-600">Jun 12, 2026</td>
-              <td class="px-6 py-4 font-medium text-slate-900">Sarah Chen</td>
-              <td class="px-6 py-4 text-slate-600">Daniel Osei</td>
-              <td class="px-6 py-4 font-mono text-slate-900">-$1,250.00</td>
-              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-red-700 bg-red-50 px-2.5 py-1 rounded-full">Failed</span></td>
-            </tr>
-            <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="px-6 py-4 font-mono text-slate-500">TXN-84121</td>
-              <td class="px-6 py-4 text-slate-600">Jun 10, 2026</td>
-              <td class="px-6 py-4 text-slate-600">External deposit</td>
-              <td class="px-6 py-4 font-medium text-slate-900">Sarah Chen</td>
-              <td class="px-6 py-4 font-mono text-emerald-700">+$500.00</td>
-              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
-            </tr>
-            <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="px-6 py-4 font-mono text-slate-500">TXN-84099</td>
-              <td class="px-6 py-4 text-slate-600">Jun 8, 2026</td>
-              <td class="px-6 py-4 font-medium text-slate-900">Sarah Chen</td>
-              <td class="px-6 py-4 text-slate-600">Wei Zhang</td>
-              <td class="px-6 py-4 font-mono text-slate-900">-$60.00</td>
-              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
-            </tr>
-            <tr class="hover:bg-slate-50/60 transition-colors">
-              <td class="px-6 py-4 font-mono text-slate-500">TXN-84072</td>
-              <td class="px-6 py-4 text-slate-600">Jun 5, 2026</td>
-              <td class="px-6 py-4 text-slate-600">External deposit</td>
-              <td class="px-6 py-4 font-medium text-slate-900">Sarah Chen</td>
-              <td class="px-6 py-4 font-mono text-emerald-700">+$1,800.00</td>
-              <td class="px-6 py-4"><span class="inline-flex items-center text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">Completed</span></td>
-            </tr>
+            @foreach (var tx in Model.Transactions)
+            {
+              <tr class="hover:bg-slate-50/60 transition-colors">
+                <td class="px-6 py-4 text-slate-600">@tx.Date.ToString("MMM d, yyyy")</td>
+                <td class="px-6 py-4 font-medium text-slate-900">@tx.Sender?.Name</td>
+                <td class="px-6 py-4 text-slate-600">@tx.Receiver?.Name</td>
+                <td class="px-6 py-4 font-mono text-slate-900">@String.Format("{0:C}", tx.Amount)</td>
+              </tr>
+            }
           </tbody>
         </table>
-      </div>
-
-      <!-- Pagination -->
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 px-6 py-4 border-t border-slate-100">
-        <p class="text-sm text-slate-500">Showing <span class="font-medium text-slate-700">1–7</span> of <span class="font-medium text-slate-700">142</span> transactions</p>
-        <div class="flex items-center gap-1.5">
-          <button class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-400 text-sm cursor-not-allowed">Prev</button>
-          <button class="w-8 h-8 rounded-lg bg-emerald-600 text-white text-sm font-semibold">1</button>
-          <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-100 text-sm font-medium transition-colors">2</button>
-          <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-100 text-sm font-medium transition-colors">3</button>
-          <span class="px-1 text-slate-400">…</span>
-          <button class="w-8 h-8 rounded-lg text-slate-600 hover:bg-slate-100 text-sm font-medium transition-colors">21</button>
-          <button class="px-3 py-1.5 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-medium transition-colors">Next</button>
-        </div>
       </div>
     </div>
 

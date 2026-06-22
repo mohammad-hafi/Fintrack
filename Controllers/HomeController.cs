@@ -30,7 +30,9 @@ public class HomeController : Controller
         }
         var user = await _context.Users.FirstOrDefaultAsync(x=>x.Id == userId);
 
-        var transactions=await _context.Transactions.Where(x=>
+        var transactions=await _context.Transactions.Include(x=>x.Receiver)
+        .Include(x=>x.Sender)
+        .Where(x=>
             x.SenderId==userId ||
             x.ReceiverId==userId
         ).OrderByDescending(x=>x.Date).ToListAsync();
@@ -44,6 +46,10 @@ public class HomeController : Controller
         return View(vm);      
     }
     public IActionResult Transaction()
+    {
+        return View();
+    }
+    public IActionResult Transfer()
     {
         return View();
     }

@@ -28,9 +28,10 @@ public class TransactionController: Controller
             if (sender == null || receiver == null)
         return BadRequest("Invalid users");
 
-        if (sender.Balance < amount)
-        return BadRequest("Not enough balance");
-
+        if (sender.Balance < amount){
+        TempData["Error"] = "Not enough balance";
+return RedirectToAction("Dashboard", "Home");
+        }
         sender.Balance -= amount;
         receiver.Balance += amount;
 
@@ -44,7 +45,8 @@ public class TransactionController: Controller
 
         _context.Transactions.Add(tx);
         await _context.SaveChangesAsync();
-
+        
+        TempData["Success"] = "Transfer completed successfully";
         return RedirectToAction("Dashboard","Home");
     }
 }

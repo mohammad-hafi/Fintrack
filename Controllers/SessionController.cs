@@ -20,14 +20,16 @@ public class SessionController : Controller
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromForm]UserRegister dto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+        if (!ModelState.IsValid){
+        TempData["Error"] = "ERROR";
+return RedirectToAction("Register", "Logging");
+    }
 
         var reg = await _context.Users.AnyAsync(x=>x.Email == dto.Email);
-        if(reg)
-            return BadRequest("Email already exist");
+        if(reg){
+        TempData["Error"] = "ERROR";
+return RedirectToAction("Register", "Logging");
+    }
 
         var user=new User{
             Name = dto.Name,
@@ -40,6 +42,7 @@ public class SessionController : Controller
         await _context.SaveChangesAsync();
 
         HttpContext.Session.SetInt32("UserId", user.Id);
+        HttpContext.Session.SetString("UserName", user.Name);
 
         return RedirectToAction("Dashboard", "Home");
     }
@@ -51,15 +54,23 @@ public class SessionController : Controller
     {
         var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == dto.Email);
 
-    if (user == null)
-        return BadRequest("Invalid credentials");
-
+    if (user == null){
+        TempData["Error"] = "ERROR";
+return RedirectToAction("Login", "Logging");
+    }
     var valid = _hash.Verify(dto.Password, user.Password);
 
-    if (!valid)
-        return BadRequest("Invalid credentials");
-
-    HttpContext.Session.SetInt32("UserId", user.Id);
+    if (!valid){
+        TempData["Error"] = "ERROR";
+return RedirectToAction("Login", "Logging");
+    }
+HttpContext.Session.SetInt32("UserId", user.Id);
     return RedirectToAction("Dashboard", "Home");
+}
+public IActionResult Logout()
+{
+    HttpContext.Session.Clear();
+
+    return RedirectToAction("Index","Home");
 }
 }
