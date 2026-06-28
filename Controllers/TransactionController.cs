@@ -15,38 +15,63 @@ public class TransactionController: Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Send(int receiverId, decimal amount)
+    public async Task<IActionResult> Send(string receiverEmail, decimal amount)
     {
-        var senderId=HttpContext.Session.GetInt32("UserId");
+           var senderId = HttpContext.Session.GetInt32("UserId");
 
-        if (senderId == null)
+    if (senderId == null)
+        return RedirectToAction("Login", "logging");
+
+    var sender = await _context.Users.FindAsync(senderId);
+
+    if (sender == null)
+    {
         return RedirectToAction("Login", "Logging");
+    }
 
-        var sender= await _context.Users.FindAsync(senderId);
-        var receiver= await _context.Users.FindAsync(receiverId);
+    var receiver = await _context.Users
+        .FirstOrDefaultAsync(x => x.Email == receiverEmail);
 
-            if (sender == null || receiver == null)
-        return BadRequest("Invalid users");
+    if (receiver == null)
+    {
+        TempData["Error"] = "Receiver not found";
+        return RedirectToAction("Dashboard", "Home");
+    }
 
-        if (sender.Balance < amount){
+    if (sender.Email == receiver.Email)
+    {
+        TempData["Error"] = "You cannot send money to yourself";
+        return RedirectToAction("Dashboard", "Home");
+    }
+
+    if (amount <= 0)
+    {
+        TempData["Error"] = "Invalid amount";
+        return RedirectToAction("Dashboard", "Home");
+    }
+
+    if (sender.Balance < amount)
+    {
         TempData["Error"] = "Not enough balance";
-return RedirectToAction("Dashboard", "Home");
-        }
-        sender.Balance -= amount;
-        receiver.Balance += amount;
+        return RedirectToAction("Dashboard", "Home");
+    }
 
-        var tx = new Transaction
-        {
+    sender.Balance -= amount;
+    receiver.Balance += amount;
+
+    var tx = new Transaction
+    {
         SenderId = sender.Id,
         ReceiverId = receiver.Id,
         Amount = amount,
-        Date = DateTime.Now
-        };
+        Date = DateTime.UtcNow
+    };
 
-        _context.Transactions.Add(tx);
-        await _context.SaveChangesAsync();
-        
-        TempData["Success"] = "Transfer completed successfully";
-        return RedirectToAction("Dashboard","Home");
+    _context.Transactions.Add(tx);
+    await _context.SaveChangesAsync();
+
+    TempData["Success"] = "Transfer completed successfully";
+
+    return RedirectToAction("Dashboard", "Home");
     }
 }

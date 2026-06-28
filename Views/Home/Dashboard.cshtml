@@ -1,5 +1,8 @@
 @using fintrack.ViewModels
-@model DashboardViewModel
+@model fintrack.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "FinTrack";
+}
 <div class="bg-slate-50 text-slate-900 antialiased">
 
   <!-- App Navbar -->
@@ -8,11 +11,11 @@
   <main class="max-w-7xl mx-auto px-6 lg:px-8 py-8 space-y-8">
 
     <div>
-      <h1 class="font-display text-2xl font-bold text-slate-900">Welcome back, @Model.Name</h1>
+      <h1 class="font-display text-2xl font-bold text-slate-900">Welcome back, @Model.User?.Name</h1>
     </div>
 
     <!-- Wallet overview -->
-    <div class="grid lg:grid-cols-3 gap-6">
+    <div class="grid lg:grid-cols-3 gap-6 w-full">
       <!-- Balance card (signature wallet card) -->
       <div class="relative rounded-3xl bg-gradient-to-br from-emerald-400 via-blue-600 to-indigo-700 p-7 shadow-xl shadow-indigo-900/15 overflow-hidden">
         <div class="absolute -right-10 -top-10 w-44 h-44 rounded-full bg-white/10"></div>
@@ -22,44 +25,10 @@
           <svg class="w-9 h-6 text-white/90" viewBox="0 0 32 24" fill="none"><rect x="0.5" y="0.5" width="31" height="23" rx="4" stroke="currentColor"/><line x1="0.5" y1="9" x2="31.5" y2="9" stroke="currentColor"/></svg>
         </div>
         <p class="relative text-white/70 text-xs font-medium tracking-widest uppercase mt-8">Current balance</p>
-        <p class="relative font-display text-white text-4xl font-semibold mt-1">$@Model.Balance</p>
+        <p class="relative font-display text-white text-4xl font-semibold mt-1">$@Model.User?.Balance</p>
         <div class="relative mt-7 flex items-center justify-between">
           <p class="font-mono text-white/80 text-sm tracking-widest">•••• •••• •••• 4821</p>
-          <p class="text-white/70 text-xs tracking-wide">@Model.Name</p>
-        </div>
-      </div>
-
-      <!-- Stat widgets -->
-      <div class="lg:col-span-2 grid sm:grid-cols-3 gap-5">
-        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
-          <span class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
-            <svg class="w-5 h-5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
-          </span>
-          <div class="mt-5">
-            <p class="text-sm text-slate-500">Total deposits</p>
-            <p class="font-display font-mono text-2xl font-semibold text-slate-900 mt-1">$18,200.00</p>
-            <p class="text-xs text-emerald-600 font-medium mt-1">+12.4% this month</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
-          <span class="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
-            <svg class="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
-          </span>
-          <div class="mt-5">
-            <p class="text-sm text-slate-500">Total transfers</p>
-            <p class="font-display font-mono text-2xl font-semibold text-slate-900 mt-1">$9,540.50</p>
-            <p class="text-xs text-slate-500 font-medium mt-1">Across 24 transfers</p>
-          </div>
-        </div>
-        <div class="bg-white rounded-2xl border border-slate-200 p-6 flex flex-col justify-between">
-          <span class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
-            <svg class="w-5 h-5 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l5-5 4 4 8-8"/><path d="M21 21H3V3"/></svg>
-          </span>
-          <div class="mt-5">
-            <p class="text-sm text-slate-500">Recent activity</p>
-            <p class="font-display font-mono text-2xl font-semibold text-slate-900 mt-1">37</p>
-            <p class="text-xs text-slate-500 font-medium mt-1">Events in last 30 days</p>
-          </div>
+          <p class="text-white/70 text-xs tracking-wide">@Model.User?.Name</p>
         </div>
       </div>
     </div>
@@ -68,7 +37,7 @@
     <div>
       <h2 class="font-display text-lg font-semibold text-slate-900 mb-4">Quick actions</h2>
       <div class="grid sm:grid-cols-3 gap-5">
-        <a href="deposit.html" class="group bg-white rounded-2xl border border-slate-200 hover:border-emerald-300 hover:shadow-lg hover:shadow-slate-900/5 p-6 flex items-center gap-4 transition-all">
+        <a asp-controller="Wallet" asp-action="Deposit" class="group bg-white rounded-2xl border border-slate-200 hover:border-emerald-300 hover:shadow-lg hover:shadow-slate-900/5 p-6 flex items-center gap-4 transition-all">
           <span class="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center shrink-0 group-hover:bg-emerald-100 transition-colors">
             <svg class="w-5.5 h-5.5 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
           </span>

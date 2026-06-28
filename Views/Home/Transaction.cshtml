@@ -1,5 +1,8 @@
 @using fintrack.ViewModels
 @model DashboardViewModel
+@{
+    ViewData["Title"] = "FinTrack";
+}
 <div class="bg-slate-50 text-slate-900 antialiased">
 
   <!-- App Navbar -->
@@ -18,20 +21,19 @@
         <table class="w-full text-sm">
           <thead>
             <tr class="text-left text-slate-500 border-b border-slate-100 bg-slate-50/60">
-              <th class="px-6 py-3 font-medium">Date</th>
+              <th class="px-6 py-3 font-medium">Amount</th>
               <th class="px-6 py-3 font-medium">Sender</th>
               <th class="px-6 py-3 font-medium">Receiver</th>
-              <th class="px-6 py-3 font-medium">Amount</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
-            @foreach (var tx in Model.Transactions)
+            @{ var transactions = Model?.Transactions ?? new List<Transaction>(); }
+            @foreach (var tx in transactions)
             {
               <tr class="hover:bg-slate-50/60 transition-colors">
-                <td class="px-6 py-4 text-slate-600">@tx.Date.ToString("MMM d, yyyy")</td>
-                <td class="px-6 py-4 font-medium text-slate-900">@tx.Sender?.Name</td>
-                <td class="px-6 py-4 text-slate-600">@tx.Receiver?.Name</td>
-                <td class="px-6 py-4 font-mono text-slate-900">@String.Format("{0:C}", tx.Amount)</td>
+                <td class="px-6 py-4 text-slate-600">@tx.Amount</td>
+                <td class="px-6 py-4 font-medium text-slate-900">@tx.Type</td>
+                <td class="px-6 py-4 text-slate-600">@tx.Date</td>
               </tr>
             }
           </tbody>

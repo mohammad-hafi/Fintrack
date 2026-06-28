@@ -23,31 +23,68 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> Dashboard()
     {
-        var userId=HttpContext.Session.GetInt32("UserId");
+        var userId = HttpContext.Session.GetInt32("UserId");
 
-        if(userId==null){
-            return RedirectToAction("Login","Logging");
-        }
-        var user = await _context.Users.FirstOrDefaultAsync(x=>x.Id == userId);
-
-        var transactions=await _context.Transactions.Include(x=>x.Receiver)
-        .Include(x=>x.Sender)
-        .Where(x=>
-            x.SenderId==userId ||
-            x.ReceiverId==userId
-        ).OrderByDescending(x=>x.Date).ToListAsync();
-
-        var vm=new DashboardViewModel
+        if (userId == null)
         {
-            Name=user.Name,
-            Balance=user.Balance.ToString(),
-            Transactions=transactions
+            return RedirectToAction("Login", "Logging");
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Logging");
+        }
+
+        var transactions = await _context.Transactions
+            .Include(t => t.Sender)
+            .Include(t => t.Receiver)
+            .Where(t =>
+                t.SenderId == userId ||
+                t.ReceiverId == userId)
+            .OrderByDescending(t => t.Date)
+            .ToListAsync();
+
+        var vm = new DashboardViewModel
+        {
+            User = user,
+            Transactions = transactions
         };
-        return View(vm);      
+
+        return View(vm);
     }
-    public IActionResult Transaction()
+    public async Task<IActionResult> Transaction()
     {
-        return View();
+        var userId = HttpContext.Session.GetInt32("UserId");
+
+        if (userId == null)
+        {
+            return RedirectToAction("Login", "Logging");
+        }
+
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+        if (user == null)
+        {
+            return RedirectToAction("Login", "Logging");
+        }
+
+        var transactions = await _context.Transactions
+            .Include(t => t.Sender)
+            .Include(t => t.Receiver)
+            .Where(t =>
+                t.SenderId == userId ||
+                t.ReceiverId == userId)
+            .OrderByDescending(t => t.Date)
+            .ToListAsync();
+
+        var vm = new DashboardViewModel
+        {
+            User = user,
+            Transactions = transactions
+        };
+
+        return View(vm);
     }
     public IActionResult Transfer()
     {
